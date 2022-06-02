@@ -19,6 +19,19 @@ export class ReclamoService {
     return this.http.post(baseUrlReclamo, data);
   }
 
+  actualizaReclamo(data:Reclamo): Observable<any>{
+    return this.http.put(baseUrlReclamo, data);
+  }
+  
+  eliminaReclamo(data:Reclamo): Observable<any>{
+    return this.http.delete(baseUrlReclamo+"/"+data.idReclamo);
+  }
+
+  listarReclamo(): Observable<any>{
+    return this.http.get<any>(baseUrlReclamo+"/listar");
+  }
+
+
   consultaReclamo(estado:number, fechaCompra:string, idCliente:number, idTipo:number):Observable<any>{
     
     const params = new HttpParams().set("estado", estado).set("fechaCompra", fechaCompra).set("idCliente", idCliente).set("idTipo", idTipo)
