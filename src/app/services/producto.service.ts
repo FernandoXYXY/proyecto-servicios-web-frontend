@@ -35,7 +35,17 @@ export class ProductoService {
     const params = new HttpParams().set("nombre", nombre).set("serie", serie).set("idPais", idPais).set("idMarca",idMarca).set("estado", estado);  
     return this.http.get<any>(baseUrlProducto + "/listaproductoporparmetros", {params});
  }
+
+
+ listaProductoxnombre(filtro:string):Observable<Producto[]>{
+  return this.http.get<Producto[]>(baseUrlProducto+"/listarproductopornombre/"+filtro);
+
+ }
   
+ actualizaDocente(obj:Producto):Observable<any>{
+   return this.http.put(baseUrlProducto+"/actualizaProducto",obj);
+ }
+
 
 }
 
