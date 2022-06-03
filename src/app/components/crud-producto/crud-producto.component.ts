@@ -19,13 +19,27 @@ export class CrudProductoComponent implements OnInit {
   filtro : string="";
 
   producto : Producto={
-      pais:{
-        idPais:-1
-      },
+    
+      idProducto: 0,
+      nombre: "",
+      serie: "",
+      durabilidad: "",
+      fechaVigencia: new Date,
+      precio: 0,
+      stock: 0,
+      estado: 1,
+      marca: {
+        idMarca: 0,
 
-      marca:{
-        idMarca: -1
-      }
+        pais: {
+          idPais: -1,
+          
+        }
+      },
+      pais: {
+        "idPais": -1,
+      
+    }
 
   }
 
@@ -55,10 +69,14 @@ export class CrudProductoComponent implements OnInit {
 
         }
         
+        
       )
 
    }
 
+   buscar(aux: Producto){
+    this.producto  = aux;
+ }
  
 
 
@@ -69,6 +87,62 @@ export class CrudProductoComponent implements OnInit {
 }
 
   ngOnInit(): void {
+  }
+
+  actualizar(){ 
+   
+    this.productoService.actualizarProducto(this.producto).subscribe(
+      (x) =>  alert(x.mensaje)
+    );
+      //limpiar el ngModel
+    this.limpiar();
+    //recargar la pag
+    setTimeout(() => {
+      window.location.reload();
+    }, 1500);
+    
+ }
+
+
+  eliminar(){
+    this.productoService.eliminarProducto(this.producto).subscribe(
+      (x) => alert(x.mensaje)
+    );
+      //limpiar los ngModels
+      this.limpiar();
+      //recargar la pag
+      setTimeout(() => {
+        window.location.reload();
+      }, 1500);
+  
+   }
+   limpiar(){
+    {
+      this.producto={
+      idProducto: 0,
+      nombre: "",
+      serie: "",
+      durabilidad: "",
+      fechaVigencia: new Date(),
+      precio: 0,
+      stock: 0,
+      estado: 1,
+      marca: {
+        idMarca: 0,
+
+        pais: {
+          idPais: -1,
+          
+        }
+      },
+      pais: {
+        idPais: -1,
+        
+      },
+      
+    }
+
+   }
   }
 
 }

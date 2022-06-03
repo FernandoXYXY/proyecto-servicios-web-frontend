@@ -42,9 +42,12 @@ export class ProductoService {
 
  }
   
- actualizaDocente(obj:Producto):Observable<any>{
-   return this.http.put(baseUrlProducto+"/actualizaProducto",obj);
+ actualizarProducto(obj:Producto):Observable<any>{
+   return this.http.put(baseUrlProducto,obj);
  }
+ eliminarProducto(data:Producto): Observable<any>{
+  return this.http.delete(baseUrlProducto+"/eliminarProducto/"+data.idProducto);
+}
 
 
 }
