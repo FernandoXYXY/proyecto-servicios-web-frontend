@@ -1,1 +1,275 @@
-<p>crud-marca works!</p>
+
+<div class="container" >
+    <h5>Crud de Marca</h5>
+
+    <div class="col-md-23" style="margin-top: 3%">
+
+
+        <div class="row" style="height: 80px">
+            <div class="col-md-4">
+                <input [(ngModel)] = "filtro"  class="form-control"  id="id_txt_filtro" name="filtro" placeholder="Ingrese el nombre" type="text" maxlength="30" />
+            </div>
+            <div class="col-md-2">
+                <button type="button" class="btn btn-primary" id="id_btn_filtrar" style="width: 150px" (click)="consulta()">Filtrar</button>
+            </div>
+            <div class="col-md-2">
+                <button  type="button" data-toggle='modal' data-target="#idModalRegistrar" class='btn btn-success' style="width: 150px">Registrar</button>
+            </div>
+        </div>
+
+        <div class="row" style="margin-top: 3%" >
+            <table class="table table-hover" >
+                <thead style="background-color: burlywood">
+                    <tr>
+                        <th class="text-center">ID</th>
+                        <th class="text-center">nombre</th>
+                        <th class="text-center">Descripcion</th>
+                        <th class="text-center">Certificado</th>
+                        <th class="text-center">Fecha Vigencia</th>
+                        <th class="text-center">Pais</th>
+                        <th class="text-center">Estado</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="fondo" *ngFor = "let aux of marcas" >
+                         
+
+                        <td>{{ aux.idMarca }}</td>   
+                        <td>{{ aux.nombre }}</td>   
+                        <td>{{ aux.descripcion }}</td>   
+                        <td>{{ aux.certificado }}</td>
+                        <td>{{ aux.fechaVigencia }}</td>  
+                        <td>{{ aux.pais!.nombre}}</td>  
+                        <td>{{ aux.estado==1?'Activo':'Inactivo' }}</td>
+             
+            <td><button type="button" style="width: 90px" class="btn btn-primary btn-sm"  data-toggle="modal" data-target="#idModalActualizar" (click)="buscar(aux)">Editar</button></td>
+            <td><button type="button" style="width: 90px" class="btn btn-danger btn-sm"  data-toggle="modal" data-target="#idModalEliminar" (click)="buscar(aux)" >Eliminar</button></td>
+  
+          </tr>
+          
+
+            </tbody>
+               
+
+            </table>
+
+
+        </div>
+            </div>
+        </div>
+    
+
+
+    <div class="modal fade"  id="idModalRegistrar" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+        <div class="modal-dialog" style="max-width: 70%;">
+            <div class="modal-content" >
+
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Registro de Marca</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                
+                <div class="modal-body">
+
+<form class="content"  (ngSubmit)="insertado()">
+    <div class="submit-form" >
+  
+         <div class="row">
+            <div class="col-lg-12">
+                <h6>Registrar Producto </h6>
+            </div>
+        </div>
+  
+        <div class="row" style="margin-top: 3%">
+                <div class="col-lg-6">
+                    <label for="nombre">Nombre</label>
+                    <input type="text" class="form-control" name="nombre" id="nombre"  [(ngModel)]="marca.nombre"  />
+                </div>
+            
+                <div class="col-lg-3">
+                    <label for="descripcion">Descripcion</label>
+                    <input type="text" class="form-control" name="descripcion" id="descripcion" maxlength="10"  [(ngModel)]="marca.descripcion"/>
+                </div>
+
+                <div class="col-lg-3">
+                        <label for="certificado">Certificado</label>
+                        <input type="text" class="form-control" name="certificado" id="certificado" maxlength="10"  [(ngModel)]="marca.certificado"  />
+                </div>
+         </div>
+  
+        <div class="row" style="margin-top: 3%">
+        <div class="col-lg-3">
+            <label for="fechavigencia">Fecha de Vigencia</label>
+            <input type="date"    class="form-control" id="fechavigencia"  name="fechavigencia" maxlength="10"  [(ngModel)]="marca.fechaVigencia" />
+        </div>
+
+
+            <div class="col-lg-3">
+                <label for="pais">Pais</label>
+                <select  id="pais" name="pais" class="form-control" [(ngModel)]="marca.pais!.idPais">
+                    <option value="-1"> [Seleccione] </option>   
+                    <option *ngFor="let aux of pais" value="{{aux.idPais}}">
+                        {{aux.nombre}}
+                    </option>
+
+                </select>
+            </div>
+
+        </div>
+    </div> 
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" id="btn_reg_cerrar" style="width: 100px;">Close</button>
+        <div class="form-group text-center">
+            <div class="col-lg-12">
+                <button id="id_reg_registra"  class="btn btn-success form-control"style="width: 100px;">Registrar</button>
+            </div>
+        </div>
+    </div>
+  
+     </form>
+  
+    </div>
+
+
+
+</div>
+</div>
+</div>
+
+<div class="modal fade"  id="idModalActualizar" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="max-width: 70%;">
+        <div class="modal-content" >
+
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Actualizar de Marca</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            
+            <div class="modal-body">
+
+<form class="content"  (ngSubmit)="actualizar()">
+<div class="submit-form" >
+
+     <div class="row">
+        <div class="col-lg-12">
+            <h6>Actualiza Marca </h6>
+        </div>
+    </div>
+
+    <div class="row" style="margin-top: 3%">
+            <div class="col-lg-6">
+                <label for="nombre">Nombre</label>
+                <input type="text" class="form-control" name="nombre" id="nombre"  [(ngModel)]="marca.nombre"  />
+            </div>
+        
+            <div class="col-lg-3">
+                <label for="descripcion">Descripcion</label>
+                <input type="text" class="form-control" name="descripcion" id="descripcion" maxlength="10"  [(ngModel)]="marca.descripcion"/>
+            </div>
+
+            <div class="col-lg-3">
+                <label for="certificado">Certificado</label>
+                <input type="text" class="form-control" name="certificado" id="certificado" maxlength="10"  [(ngModel)]="marca.certificado"  />
+        </div>
+     </div>
+
+    <div class="row" style="margin-top: 3%">
+    <div class="col-lg-3">
+        <label for="fechavigencia">Fecha de Vigencia</label>
+        <input type="date"    class="form-control" id="fechavigencia"  name="fechavigencia" maxlength="10"  [(ngModel)]="marca.fechaVigencia" />
+    </div>
+
+
+        <div class="col-lg-3">
+            <label for="pais">Pais</label>
+            <select  id="pais" name="pais" class="form-control" [(ngModel)]="marca.pais!.idPais">
+                <option value="-1"> [Seleccione] </option>   
+                <option *ngFor="let aux of pais" value="{{aux.idPais}}">
+                    {{aux.nombre}}
+                </option>
+
+            </select>
+        </div>
+
+    </div>
+</div> 
+<div class="modal-footer">
+    <button type="button" class="btn btn-secondary" data-dismiss="modal" id="btn_reg_cerrar" style="width: 100px;">Close</button>
+    <div class="form-group text-center">
+        <div class="col-lg-12">
+            <button id="id_reg_registra"  class="btn btn-success form-control"style="width: 100px;">Actualizar</button>
+        
+
+        </div>
+    </div>
+</div>
+
+ </form>
+    </div>
+
+</div>
+</div>
+
+</div>
+
+<div class="modal fade" id="idModalEliminar" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Eliminación de  Producto</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                     <span aria-hidden="true">&times;</span>
+                 </button>
+            </div>
+            <div class="modal-body">
+
+                <form class="content" (ngSubmit)="eliminar()" >
+                    <div class="submit-form" >
+                  
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-9 mt-2">
+                                    <p> ¿Esta seguro de eliminar el Producto con ID:</p>
+                                </div>
+                                <div class="col-md-2">
+                                    <input type="text"  class="form-control mb-4" id="idEliminacionDesc"  name="desc"  [(ngModel)]="marca.idMarca" readonly/>
+                                </div>
+                                <div class="col-md-1 mt-2">
+                                    <p>?</p>
+                                </div>
+                            </div>
+                        </div>
+                  
+                        
+                  
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal" id="btn_act_cerrar" (click)="limpiar()">Cancelar</button>
+                            <div class="form-group text-center">
+                                <div class="col-lg-12">
+                                    <button id="id_eli_eliminar" class="btn btn-danger form-control">Eliminar</button>
+                                </div>
+                            </div>
+                        </div>
+                  
+                    
+                      </div>
+                  
+                     </form>
+
+                
+
+
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
