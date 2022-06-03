@@ -82,6 +82,10 @@ consulta(){
   }
 
 
+  actualizaEstado(aux : Marca){
+    aux.estado = aux.estado == 0? 1 :0;
+    this.marcaService.actualizarMarca(aux).subscribe();
+}
 
   actualizar(){ 
    
