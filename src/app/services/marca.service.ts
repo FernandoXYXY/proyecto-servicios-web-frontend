@@ -33,7 +33,20 @@ export class MarcaService {
     return this.http.get<any>(baseUrlMarca + "/listaMarcaConParametros", {params});
  }
 
+ listaMarcaxnombre(filtro:string):Observable<Marca[]>{
+  return this.http.get<Marca[]>(baseUrlMarca+"/listaMarcaPorNombreLike/"+filtro);
+
+ }
+
+ 
   
+ actualizarMarca(obj:Marca):Observable<any>{
+   return this.http.put(baseUrlMarca,obj);
+ }
+
+ eliminarMarca(data:Marca): Observable<any>{
+  return this.http.delete(baseUrlMarca+"/eliminarMarca/"+data.idMarca);
+}
 
 }
 
