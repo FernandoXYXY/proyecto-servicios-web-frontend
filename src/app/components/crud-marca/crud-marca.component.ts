@@ -169,19 +169,20 @@ actualiza(){
 
 }
 
-
- eliminar(){
-  this.marcaService.eliminarMarca(this.marca).subscribe(
-    (x) => alert(x.mensaje)
-  );
-    //limpiar los ngModels
-    this.limpiar();
-    //recargar la pag
-    setTimeout(() => {
-      window.location.reload();
-    }, 1500);
-
- }
+elimina(aux :Marca){
+ 
+            this.marcaService.eliminarMarca(aux.idMarca).subscribe(
+              (x) => {
+               alert(x.mensaje);
+                this.marcaService.listaMarcaxnombre(this.filtro==""?"todos":this.filtro).subscribe(
+                        (x) => this.marcas = x
+                );
+       
+              } 
+            );
+  
+}
+ 
 
  limpiar(){
   {
