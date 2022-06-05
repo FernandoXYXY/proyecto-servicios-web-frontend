@@ -47,8 +47,12 @@ export class MarcaService {
   return this.http.put<any>(baseUrlMarca+"/actualizaMarca", aux);
  }
 
- eliminarMarca(data:Marca): Observable<any>{
-  return this.http.delete(baseUrlMarca+"/eliminarMarca/"+data.idMarca);
+// eliminarMarca(data:Marca): Observable<any>{
+ // return this.http.delete(baseUrlMarca+"/eliminarMarca/"+data.idMarca);
+//}
+
+eliminarMarca(id: any): Observable<any>{
+  return this.http.delete(baseUrlMarca + "/eliminaMarca/" + id);
 }
 
 }

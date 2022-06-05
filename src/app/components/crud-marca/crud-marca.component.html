@@ -56,7 +56,7 @@
                         </td>
              
             <td><button type="button" style="width: 90px" class="btn btn-primary btn-sm"  data-toggle="modal" data-target="#idModalActualizar" (click)="buscar(aux)">Editar</button></td>
-            <td><button type="button" style="width: 90px" class="btn btn-danger btn-sm"  data-toggle="modal" data-target="#idModalEliminar" (click)="buscar(aux)" >Eliminar</button></td>
+            <td><button type="button" style="width: 90px" class="btn btn-danger btn-sm"   (click)="elimina(aux)" >Eliminar</button></td>
   
           </tr>
           
@@ -155,7 +155,7 @@
         </div>
     </div> 
     <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal" id="btn_reg_cerrar" style="width: 100px;">Close</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" id="btn_reg_cerrar" style="width: 100px;" (click)="limpiar()">Cerrar</button>
         <div class="form-group text-center">
             <div class="col-lg-12">
                 <button id="id_reg_registra"  class="btn btn-success form-control"style="width: 100px;" [disabled]="submitted && formsRegistra.invalid">Registrar</button>
@@ -280,7 +280,7 @@
 
 
 <div class="modal-footer">
-    <button type="button" class="btn btn-secondary" data-dismiss="modal" id="btn_reg_cerrar" style="width: 100px;">Close</button>
+    <button type="button" class="btn btn-secondary" data-dismiss="modal" id="btn_reg_cerrar" style="width: 100px;" (click)="limpiar()">Cerrar</button>
     <div class="form-group text-center">
         <div class="col-lg-12">
             <button id="id_reg_registra"  class="btn btn-success form-control"style="width: 100px;" [disabled]="submitted && formsActualiza.invalid">Actualizar</button>
@@ -296,59 +296,5 @@
 </div>
 </div>
 
-</div>
-
-<div class="modal fade" id="idModalEliminar" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Eliminación de  Producto</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                     <span aria-hidden="true">&times;</span>
-                 </button>
-            </div>
-            <div class="modal-body">
-
-                <form class="content" (ngSubmit)="eliminar()" >
-                    <div class="submit-form" >
-                  
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-md-9 mt-2">
-                                    <p> ¿Esta seguro de eliminar el Producto con ID:</p>
-                                </div>
-                                <div class="col-md-2">
-                                    <input type="text"  class="form-control mb-4" id="idEliminacionDesc"  name="desc"  [(ngModel)]="marca.idMarca" readonly/>
-                                </div>
-                                <div class="col-md-1 mt-2">
-                                    <p>?</p>
-                                </div>
-                            </div>
-                        </div>
-                  
-                        
-                  
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal" id="btn_act_cerrar" (click)="limpiar()">Cancelar</button>
-                            <div class="form-group text-center">
-                                <div class="col-lg-12">
-                                    <button id="id_eli_eliminar" class="btn btn-danger form-control">Eliminar</button>
-                                </div>
-                            </div>
-                        </div>
-                  
-                    
-                      </div>
-                  
-                     </form>
-
-                
-
-
-
-            </div>
-
-        </div>
-    </div>
 </div>
 
