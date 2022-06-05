@@ -20,7 +20,7 @@
         <div class="row" style="margin-top: 5%" >
 
             
-            <table class="table table-hover" >
+            <table id="id_table" class="table table-striped table-bordered" class="table table-hover" >
                 <thead style="background-color: #242e42; color:aliceblue;">
                     <tr>
 
@@ -29,7 +29,7 @@
                         <th>nombre</th>
                         <th>Descripcion</th>
                         <th>Certificado</th>
-                        <th>Fecha Vigencia</th>
+                        <th>Fecha Registro</th>      
                         <th>Pais</th>
                         <th>Estado</th>
                         <th colspan="5" class="text-center">Operaciones</th>
@@ -43,7 +43,7 @@
                         <td>{{ aux.nombre }}</td>   
                         <td>{{ aux.descripcion }}</td>   
                         <td>{{ aux.certificado }}</td>
-                        <td>{{ aux.fechaVigencia }}</td>  
+                        <td>{{ aux.fechaRegistro}}</td>  
                         <td>{{ aux.pais!.nombre}}</td>  
                         <td>{{ aux.estado==1?'Activo':'Inactivo' }}</td>
                         
@@ -89,48 +89,66 @@
                 
                 <div class="modal-body">
 
-<form class="content"  (ngSubmit)="insertado()">
+        <form class="content"  (ngSubmit)="registra()"  >
     <div class="submit-form" >
   
-         <div class="row"  >
-            <div class="col-lg-12">
-                <h6>Registrar Marca </h6>
-            </div>
-        </div>
-  
-        <div class="row" style="margin-top: 3%">
-                <div class="col-lg-6">
-                    <label for="nombre">Nombre</label>
-                    <input type="text" class="form-control" name="nombre" id="nombre"  [(ngModel)]="marca.nombre"  />
+        <div class="row" >
+                <div class="col-lg-6" [formGroup]="formsRegistra">
+                    <label for="id_reg_nombre">Nombre</label>
+                    <input formControlName="validaNombre" [(ngModel)]="marca.nombre"  type="text" class="form-control" name="nombre" id="id_reg_nombre"/>
+                    <div *ngIf="submitted && formsRegistra.controls['validaNombre'].errors" class="invalid">       
+                        <ul>
+                            <li>El nombre es obligatorio</li>    
+                            <li>El nombre es de 3 a 30 caracteres</li>    
+                        </ul>
+                    </div>
                 </div>
             
-                <div class="col-lg-3">
-                    <label for="descripcion">Descripcion</label>
-                    <input type="text" class="form-control" name="descripcion" id="descripcion" maxlength="10"  [(ngModel)]="marca.descripcion"/>
+                <div class="col-lg-6" [formGroup]="formsRegistra">
+                    <label for="id_reg_descripcion">Descripcion</label>
+                    <input formControlName="validaDescripcion"  [(ngModel)]="marca.descripcion" type="text" class="form-control" name="descripcion" id="id_reg_descripcion"  />
+                    <div *ngIf="submitted && formsRegistra.controls['validaDescripcion'].errors" class="invalid">       
+                        <ul>
+                            <li>La Descripcion es obligatorio</li>    
+                            <li>La Descripcion es de 3 a 30 caracteres</li>    
+                        </ul>
+                    </div>
                 </div>
 
-                <div class="col-lg-3">
-                        <label for="certificado">Certificado</label>
-                        <input type="text" class="form-control" name="certificado" id="certificado" maxlength="10"  [(ngModel)]="marca.certificado"  />
+                <div class="col-lg-4" [formGroup]="formsRegistra">
+                        <label for="id_reg_certificado">Certificado</label>
+                        <input formControlName="validaCertificado" [(ngModel)]="marca.certificado" type="text" class="form-control" name="certificado" id="certificado"   />
+                        <div *ngIf="submitted && formsRegistra.controls['validaCertificado'].errors" class="invalid">       
+                            <ul>
+                                <li>El Certificado es obligatorio</li>    
+                                <li>El Certificado es de 3 a 30 caracteres</li>    
+                            </ul>
+                        </div>
                 </div>
          </div>
   
         <div class="row" style="margin-top: 5%">
-        <div class="col-lg-4">
-            <label for="fechavigencia">Fecha de Vigencia</label>
-            <input type="date"    class="form-control" id="fechavigencia"  name="fechavigencia" maxlength="10"  [(ngModel)]="marca.fechaVigencia" />
-        </div>
+        <!--<div class="col-lg-4">
+            <label for="id_reg_fecharegistro">Fecha de Registro</label>
+            <input type="date"    class="form-control" id="id_reg_fecharegistro"  name="fechavigencia"   [(ngModel)]="marca.fechaRegistro" />
+        </div>-->
 
      
-            <div class="col-lg-4">
-                <label for="pais">Pais</label>
-                <select  id="pais" name="pais" class="form-control" [(ngModel)]="marca.pais!.idPais">
+            <div class="col-lg-4" [formGroup]="formsRegistra">
+                <label for="id_reg_pais">Pais</label>
+                <select formControlName="validaPais"  id="id_reg_pais" name="pais" class="form-control" [(ngModel)]="marca.pais!.idPais">
                     <option value="-1"> [Seleccione] </option>   
                     <option *ngFor="let aux of pais" value="{{aux.idPais}}">
                         {{aux.nombre}}
                     </option>
 
                 </select>
+                <div *ngIf="submitted && formsRegistra.controls['validaPais'].errors" class="invalid">       
+                    <ul>
+                        <li>El Campo Pais es obligatorio</li>    
+                        <li>Seleccione un Pais</li>    
+                    </ul>
+                </div>
             </div>
        
 
@@ -140,7 +158,7 @@
         <button type="button" class="btn btn-secondary" data-dismiss="modal" id="btn_reg_cerrar" style="width: 100px;">Close</button>
         <div class="form-group text-center">
             <div class="col-lg-12">
-                <button id="id_reg_registra"  class="btn btn-success form-control"style="width: 100px;">Registrar</button>
+                <button id="id_reg_registra"  class="btn btn-success form-control"style="width: 100px;" [disabled]="submitted && formsRegistra.invalid">Registrar</button>
             </div>
         </div>
     </div>
@@ -168,8 +186,8 @@
             
             <div class="modal-body">
 
-<form class="content"  (ngSubmit)="actualizar()">
-<div class="submit-form" >
+                <form class="content" (ngSubmit)="actualiza()" >
+       <div class="submit-form" >
 
      <div class="row">
         <div class="col-lg-12">
@@ -177,48 +195,95 @@
         </div>
     </div>
 
+
+     <div class="row" >
+                <div class="col-lg-6" [formGroup]="formsActualiza">
+                    <label for="id_reg_nombre">Nombre</label>
+                    <input formControlName="validaNombre" [(ngModel)]="marca.nombre"  type="text" class="form-control" name="nombre" id="id_reg_nombre"/>
+                    <div *ngIf="submitted && formsActualiza.controls['validaNombre'].errors" class="invalid">       
+                        <ul>
+                            <li>El nombre es obligatorio</li>    
+                            <li>El nombre es de 3 a 30 caracteres</li>    
+                        </ul>
+                    </div>
+                </div>
+            
+                <div class="col-lg-6" [formGroup]="formsActualiza">
+                    <label for="id_reg_descripcion">Descripcion</label>
+                    <input formControlName="validaDescripcion"  [(ngModel)]="marca.descripcion" type="text" class="form-control" name="descripcion" id="id_reg_descripcion"  />
+                    <div *ngIf="submitted && formsActualiza.controls['validaDescripcion'].errors" class="invalid">       
+                        <ul>
+                            <li>La Descripcion es obligatorio</li>    
+                            <li>La Descripcion es de 3 a 30 caracteres</li>    
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-lg-4" [formGroup]="formsActualiza">
+                        <label for="id_reg_certificado">Certificado</label>
+                        <input formControlName="validaCertificado" [(ngModel)]="marca.certificado" type="text" class="form-control" name="certificado" id="certificado"   />
+                        <div *ngIf="submitted && formsActualiza.controls['validaCertificado'].errors" class="invalid">       
+                            <ul>
+                                <li>El Certificado es obligatorio</li>    
+                                <li>El Certificado es de 3 a 30 caracteres</li>    
+                            </ul>
+                        </div>
+                </div>
+
+         <!---  <div class="col-lg-2"  [formGroup]="formsActualiza">
+                    <label  for="id_act_estado">Estado</label>
+                    <select formControlName="validaEstado"[(ngModel)]="marca.estado"  id="id_act_estado" name="estado" class="form-control">
+                        <option value="-1"> [Seleccione] </option>
+                        <option value="1"> Activo </option>
+                        <option value="0"> Inactivo </option>
+                    </select>
+                    <div *ngIf="submitted && formsActualiza.controls['validaEstado']" class="invalid">
+                        <ul>
+                            <li>El Estado es obligatorio</li>
+                        </ul>
+                    </div>
+
+                </div>-->
+
+
+         </div>
+
     <div class="row" style="margin-top: 3%">
-            <div class="col-lg-6">
-                <label for="nombre">Nombre</label>
-                <input type="text" class="form-control" name="nombre" id="nombre"  [(ngModel)]="marca.nombre"  />
-            </div>
-        
-            <div class="col-lg-3">
-                <label for="descripcion">Descripcion</label>
-                <input type="text" class="form-control" name="descripcion" id="descripcion" maxlength="10"  [(ngModel)]="marca.descripcion"/>
-            </div>
-
-            <div class="col-lg-3">
-                <label for="certificado">Certificado</label>
-                <input type="text" class="form-control" name="certificado" id="certificado" maxlength="10"  [(ngModel)]="marca.certificado"  />
-        </div>
-     </div>
-
-    <div class="row" style="margin-top: 3%">
-    <div class="col-lg-3">
-        <label for="fechavigencia">Fecha de Vigencia</label>
-        <input type="date"    class="form-control" id="fechavigencia"  name="fechavigencia" maxlength="10"  [(ngModel)]="marca.fechaVigencia" />
-    </div>
+       <!---<div class="col-lg-4">
+            <label for="id_reg_fecharegistro">Fecha de Registro</label>
+            <input type="date"    class="form-control" id="id_reg_fecharegistro"  name="fechavigencia"   [(ngModel)]="marca.fechaRegistro" />
+        </div>-->
 
 
-        <div class="col-lg-3">
-            <label for="pais">Pais</label>
-            <select  id="pais" name="pais" class="form-control" [(ngModel)]="marca.pais!.idPais">
+        <div class="col-lg-4" [formGroup]="formsActualiza">
+            <label for="id_reg_pais">Pais</label>
+            <select formControlName="validaPais"  id="id_reg_pais" name="pais" class="form-control" [(ngModel)]="marca.pais!.idPais">
                 <option value="-1"> [Seleccione] </option>   
                 <option *ngFor="let aux of pais" value="{{aux.idPais}}">
                     {{aux.nombre}}
                 </option>
 
             </select>
+            <div *ngIf="submitted && formsRegistra.controls['validaPais'].errors" class="invalid">       
+                <ul>
+                    <li>El Campo Pais es obligatorio</li>    
+                    <li>Seleccione un Pais</li>    
+                </ul>
+            </div>
         </div>
 
     </div>
 </div> 
+
+
+
+
+
 <div class="modal-footer">
     <button type="button" class="btn btn-secondary" data-dismiss="modal" id="btn_reg_cerrar" style="width: 100px;">Close</button>
     <div class="form-group text-center">
         <div class="col-lg-12">
-            <button id="id_reg_registra"  class="btn btn-success form-control"style="width: 100px;">Actualizar</button>
+            <button id="id_reg_registra"  class="btn btn-success form-control"style="width: 100px;" [disabled]="submitted && formsActualiza.invalid">Actualizar</button>
         
 
         </div>
