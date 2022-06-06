@@ -4,6 +4,7 @@ import { Pais } from 'src/app/models/pais.model';
 import { MarcaService } from 'src/app/services/marca.service';
 import { PaisService } from 'src/app/services/pais.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import Swal from 'sweetalert2'
 
 
 @Component({
@@ -94,8 +95,8 @@ actualizaEstado(aux : Marca){
       this.marcaService.registraMarca(this.marca).subscribe(
             (x) => {
               this.submitted = false;
-            
-              alert(x.mensaje);
+              document.getElementById("btn_reg_cerrar")?.click();
+              Swal.fire('Mensaje', x.mensaje,'success');
               this.marcaService.listaMarcaxnombre(this.filtro==""?"todos":this.filtro).subscribe(
                       (x) => this.marcas = x
               );
@@ -140,7 +141,8 @@ actualiza(){
  
       this.marcaService.actualizarMarca(this.marca).subscribe(
             (x) => {
-              alert(x.mensaje);
+              document.getElementById("btn_act_cerrar")?.click();
+              Swal.fire('Mensaje', x.mensaje,'success');
               this.marcaService.listaMarcaxnombre(this.filtro==""?"todos":this.filtro).subscribe(
                       (x) => this.marcas = x
               );
@@ -169,19 +171,31 @@ actualiza(){
 
 }
 
+
 elimina(aux :Marca){
- 
+  Swal.fire({
+        title: '¿Estás Seguro?',
+        text: "¡No se puede revertir!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Sí, Elimínalo'
+  }).then((result) => {
+      if (result.isConfirmed) {
             this.marcaService.eliminarMarca(aux.idMarca).subscribe(
               (x) => {
-               alert(x.mensaje);
+                Swal.fire('Mensaje',x.mensaje, 'success');
                 this.marcaService.listaMarcaxnombre(this.filtro==""?"todos":this.filtro).subscribe(
                         (x) => this.marcas = x
                 );
        
               } 
             );
-  
+      }
+  })
 }
+
  
 
  limpiar(){
