@@ -37,8 +37,8 @@ marca: Marca = {
 //Declaracion de validaciones
 formsRegistra = new FormGroup({
   validaNombre: new FormControl('', [Validators.required, Validators.pattern('[a-zA-Z ]{3,30}')]),
-  validaDescripcion: new FormControl('', [Validators.required, Validators.pattern('[a-zA-Z ]{3,30}')]),
-  validaCertificado: new FormControl('', [Validators.required, Validators.pattern('[a-zA-Z ]{3,30}')]),
+  validaDescripcion: new FormControl('', [Validators.required, Validators.pattern('[a-zA-ZáéíóúÁÉÍÓÚ.? ]{3,60}')]),
+  validaCertificado: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-ZáéíóúÁÉÍÓÚ.? 0-9]+$')]),
   validaPais: new FormControl('', [Validators.min(1)]),
 
 });
@@ -46,8 +46,8 @@ formsRegistra = new FormGroup({
 //Actualizacion
 formsActualiza = new FormGroup({
   validaNombre: new FormControl('', [Validators.required, Validators.pattern('[a-zA-Z ]{3,30}')]),
-  validaDescripcion: new FormControl('', [Validators.required, Validators.pattern('[a-zA-Z ]{3,30}')]),
-  validaCertificado: new FormControl('', [Validators.required, Validators.pattern('[a-zA-Z ]{3,30}')]),
+  validaDescripcion: new FormControl('', [Validators.required, Validators.pattern('[a-zA-ZáéíóúÁÉÍÓÚ.? ]{3,60}')]),
+  validaCertificado: new FormControl('', [Validators.required, Validators.pattern('^[a-zA-ZáéíóúÁÉÍÓÚ.? 0-9]+$')]),
   validaPais: new FormControl('', [Validators.min(1)]),
   validaEstado: new FormControl('', [Validators.min(0)]),
 
